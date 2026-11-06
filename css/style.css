@@ -1,0 +1,90 @@
+/* css/style.css — a folha de estilo do RotaFácil.
+   As classes viagem--planejada / --confirmada / --concluida pintam a barra lateral.
+   O seu código só escolhe a classe; a cor sai certa sozinha. */
+
+:root {
+  --cor-planejada: #e67e22; /* laranja */
+  --cor-confirmada: #27ae60; /* verde */
+  --cor-concluida: #7f8c8d;  /* cinza */
+  --fundo: #0f172a;
+  --cartao: #1e293b;
+  --texto: #e2e8f0;
+  --texto-suave: #94a3b8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+  line-height: 1.5;
+}
+
+/* Cabeçalho */
+.cabecalho { text-align: center; margin-bottom: 1.5rem; }
+.cabecalho__titulo { font-size: 2.4rem; letter-spacing: -0.5px; }
+.cabecalho__subtitulo { color: var(--texto-suave); margin-top: 0.25rem; }
+
+/* Painel de estatísticas */
+.painel {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.estatistica {
+  background: var(--cartao);
+  border-radius: 12px;
+  padding: 1rem 1.75rem;
+  text-align: center;
+  min-width: 120px;
+}
+.estatistica__numero { display: block; font-size: 2rem; font-weight: 700; }
+.estatistica__rotulo { color: var(--texto-suave); font-size: 0.85rem; text-transform: uppercase; }
+
+/* Aviso */
+.aviso {
+  background: rgba(230, 126, 34, 0.15);
+  border: 1px solid var(--cor-planejada);
+  color: var(--cor-planejada);
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.25rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Lista de viagens */
+.lista { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+
+.viagem {
+  background: var(--cartao);
+  border-left: 6px solid var(--texto-suave);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.viagem--planejada  { border-left-color: var(--cor-planejada); }
+.viagem--confirmada { border-left-color: var(--cor-confirmada); }
+.viagem--concluida  { border-left-color: var(--cor-concluida); opacity: 0.65; }
+
+.viagem__titulo { font-size: 1.05rem; font-weight: 600; }
+
+/* Etiqueta de situação */
+.etiqueta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  color: #0f172a;
+}
+.etiqueta--planejada  { background: var(--cor-planejada); }
+.etiqueta--confirmada { background: var(--cor-confirmada); }
+.etiqueta--concluida  { background: var(--cor-concluida); }

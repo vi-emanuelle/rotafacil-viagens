@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>RotaFácil — prévia</title>
+<style>
+:root{--cor-planejada:#e67e22;--cor-confirmada:#27ae60;--cor-concluida:#7f8c8d;--fundo:#0f172a;--cartao:#1e293b;--texto:#e2e8f0;--texto-suave:#94a3b8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--fundo);color:var(--texto);max-width:720px;margin:0 auto;padding:2rem 1.25rem;line-height:1.5;}
+.cabecalho{text-align:center;margin-bottom:1.5rem;}
+.cabecalho__titulo{font-size:2.4rem;letter-spacing:-.5px;}
+.cabecalho__subtitulo{color:var(--texto-suave);margin-top:.25rem;}
+.painel{display:flex;gap:1rem;justify-content:center;margin-bottom:1.5rem;}
+.estatistica{background:var(--cartao);border-radius:12px;padding:1rem 1.75rem;text-align:center;min-width:120px;}
+.estatistica__numero{display:block;font-size:2rem;font-weight:700;}
+.estatistica__rotulo{color:var(--texto-suave);font-size:.85rem;text-transform:uppercase;}
+.aviso{background:rgba(230,126,34,.15);border:1px solid var(--cor-planejada);color:var(--cor-planejada);padding:.75rem 1rem;border-radius:10px;margin-bottom:1.25rem;text-align:center;font-weight:600;}
+.lista{list-style:none;display:flex;flex-direction:column;gap:.75rem;}
+.viagem{background:var(--cartao);border-left:6px solid var(--texto-suave);border-radius:10px;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;}
+.viagem--planejada{border-left-color:var(--cor-planejada);}
+.viagem--confirmada{border-left-color:var(--cor-confirmada);}
+.viagem--concluida{border-left-color:var(--cor-concluida);opacity:.65;}
+.viagem__titulo{font-size:1.05rem;font-weight:600;}
+.etiqueta{font-size:.75rem;font-weight:700;text-transform:uppercase;padding:.25rem .6rem;border-radius:999px;color:#0f172a;}
+.etiqueta--planejada{background:var(--cor-planejada);}
+.etiqueta--confirmada{background:var(--cor-confirmada);}
+.etiqueta--concluida{background:var(--cor-concluida);}
+</style>
+</head>
+<body>
+<header class="cabecalho">
+  <h1 class="cabecalho__titulo">RotaFácil</h1>
+  <p class="cabecalho__subtitulo">v0.1.0 · 06/11/2026</p>
+</header>
+<section class="painel">
+  <div class="estatistica"><span class="estatistica__numero">6</span><span class="estatistica__rotulo">viagens</span></div>
+  <div class="estatistica"><span class="estatistica__numero">3</span><span class="estatistica__rotulo">planejadas</span></div>
+</section>
+<p class="aviso">Comece a planejar: #4 Tóquio</p>
+<ul class="lista">
+  <li class="viagem viagem--confirmada"><h3 class="viagem__titulo">#1 Paris, França</h3><span class="etiqueta etiqueta--confirmada">confirmada</span></li>
+  <li class="viagem viagem--concluida"><h3 class="viagem__titulo">#2 Lisboa, Portugal</h3><span class="etiqueta etiqueta--concluida">concluida</span></li>
+  <li class="viagem viagem--confirmada"><h3 class="viagem__titulo">#3 Nova York, Estados Unidos</h3><span class="etiqueta etiqueta--confirmada">confirmada</span></li>
+  <li class="viagem viagem--planejada"><h3 class="viagem__titulo">#4 Tóquio, Japão</h3><span class="etiqueta etiqueta--planejada">planejada</span></li>
+  <li class="viagem viagem--planejada"><h3 class="viagem__titulo">#5 Buenos Aires, Argentina</h3><span class="etiqueta etiqueta--planejada">planejada</span></li>
+  <li class="viagem viagem--planejada"><h3 class="viagem__titulo">#6 Fernando de Noronha, Brasil</h3><span class="etiqueta etiqueta--planejada">planejada</span></li>
+</ul>
+</body>
+</html>
