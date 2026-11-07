@@ -22,7 +22,7 @@ A página abre com o **nome** e a **versão** do sistema, a **data de hoje**, um
 ## 🗂️ Estrutura do projeto
 
 ```
-viagens/
+rotafacil-viagens/
 ├── index.html          # tela inicial (nome, versão e data)
 ├── package.json        # scripts: dev e verificar
 ├── tsconfig.json       # configuração do TypeScript (strict)
