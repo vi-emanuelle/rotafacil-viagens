@@ -1,7 +1,3 @@
-/* css/style.css — a folha de estilo do RotaFácil.
-   As classes viagem--planejada / --confirmada / --concluida pintam a barra lateral.
-   O seu código só escolhe a classe; a cor sai certa sozinha. */
-
 :root {
   --cor-planejada: #e67e22; /* laranja */
   --cor-confirmada: #27ae60; /* verde */
