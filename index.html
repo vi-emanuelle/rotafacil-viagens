@@ -28,6 +28,46 @@
   <!-- aviso escondido (hidden): o laço while é quem o mostra -->
   <p class="aviso" id="comece-por" hidden></p>
 
+  <section class="cadastro">
+    <h2 class="cadastro__titulo">Cadastrar viagem</h2>
+    <form id="form-viagem" novalidate>
+      <div class="campo">
+        <label for="destino">Destino</label>
+        <input type="text" id="destino" placeholder="Ex.: Roma" />
+      </div>
+      <div class="campo">
+        <label for="pais">País</label>
+        <input type="text" id="pais" placeholder="Ex.: Itália" />
+      </div>
+      <div class="campo">
+        <label for="situacao">Situação</label>
+        <select id="situacao">
+          <option value="planejada">Planejada</option>
+          <option value="confirmada">Confirmada</option>
+          <option value="concluida">Concluída</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="tipo">Tipo</label>
+        <select id="tipo">
+          <option value="lazer">Lazer</option>
+          <option value="trabalho">Trabalho</option>
+          <option value="familia">Família</option>
+        </select>
+      </div>
+      <div class="campo campo--largo">
+        <label for="atividades">Atividades (separadas por vírgula)</label>
+        <input type="text" id="atividades" placeholder="Ex.: Coliseu, Fontana di Trevi" />
+      </div>
+      <div class="campo campo--largo">
+        <label for="observacao">Observação (opcional)</label>
+        <input type="text" id="observacao" />
+      </div>
+      <button type="submit" class="botao">Cadastrar</button>
+      <p class="mensagem" id="mensagem-form" hidden></p>
+    </form>
+  </section>
+
   <!-- a lista começa vazia: quem a preenche é o seu código -->
   <ul class="lista" id="lista"></ul>
 

@@ -15,3 +15,5 @@ export interface Viagem {
   atividades: string[];       // lista (array de textos) — faz o papel das "tags"
   criadaEm: Date;             // quando o registro foi criado
 }
+
+export type NovaViagem = Omit<Viagem, "id" | "criadaEm">;
