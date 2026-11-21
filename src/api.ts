@@ -1,4 +1,4 @@
-import type { NovaViagem, Sessao, Situacao, Viagem } from "./tipos";
+import type { NovaViagem, Sessao, Situacao, Viagem, Contagem } from "./tipos";
 
 const CHAVE_SESSAO = "rotafacil:sessao";
 
@@ -74,4 +74,9 @@ export async function entrar(email: string, senha: string): Promise<Sessao> {
 
 export async function criarConta(nome: string, email: string, senha: string): Promise<void> {
   await enviar("POST", "/api/usuarios", { nome, email, senha });
+}
+
+export async function buscarEstatisticas(): Promise<Contagem> {
+  const resposta = await enviar("GET", "/api/estatisticas");
+  return (await resposta.json()) as Contagem;
 }

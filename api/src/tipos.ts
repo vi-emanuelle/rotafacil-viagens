@@ -12,3 +12,4 @@ export interface DadosViagem {
   observacao?: string | null;
   atividades?: string[];
 }
+

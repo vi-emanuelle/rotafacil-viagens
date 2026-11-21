@@ -1,49 +1,62 @@
-import type { NovaViagem, Viagem } from "./tipos";
+import type { Contagem, NovaViagem, Situacao, Viagem } from "./tipos";
+
+// filter: selecionar por situação
+export function filtrarPorSituacao(lista: Viagem[], situacao: Situacao): Viagem[] {
+  return lista.filter((v) => v.situacao === situacao);
+}
+
+// filter + includes: pesquisar por destino ou país
+export function pesquisarPorDestino(lista: Viagem[], termo: string): Viagem[] {
+  const procurado = termo.trim().toLowerCase();
+  return lista.filter(
+    (v) =>
+      v.destino.toLowerCase().includes(procurado) ||
+      v.pais.toLowerCase().includes(procurado)
+  );
+}
+
+// some e every: perguntas de sim ou não
+export function existePlanejada(lista: Viagem[]): boolean {
+  return lista.some((v) => v.situacao === "planejada");
+}
+
+export function todasConcluidas(lista: Viagem[]): boolean {
+  return lista.length > 0 && lista.every((v) => v.situacao === "concluida");
+}
+
+// reduce: contagem local (alternativa ao GROUP BY do banco)
+export function contarPorSituacao(lista: Viagem[]): Contagem {
+  return lista.reduce<Contagem>(
+    (acumulador, v) => {
+      acumulador[v.situacao]++;
+      return acumulador;
+    },
+    { planejada: 0, confirmada: 0, concluida: 0 }
+  );
+}
+
+// sort: ordena sem alterar o array original
+const pesoSituacao: Record<Situacao, number> = {
+  planejada: 3,
+  confirmada: 2,
+  concluida: 1,
+};
+
+export function ordenarPorSituacao(lista: Viagem[]): Viagem[] {
+  return [...lista].sort(
+    (a, b) => pesoSituacao[b.situacao] - pesoSituacao[a.situacao]
+  );
+}
 
 export function separarAtividades(texto: string): string[] {
-  const partes = texto.split(",");
-  const atividades: string[] = [];
-  for (const parte of partes) {
-    const limpa = parte.trim();
-    if (limpa !== "") {
-      atividades.push(limpa);
-    }
-  }
-  return atividades;
+  return texto
+    .split(",")
+    .map((item) => item.trim())
+    .filter((item) => item !== "");
 }
 
 export function validarViagem(dados: NovaViagem): string | null {
-  if (dados.destino.trim() === "") {
-    return "Informe o destino.";
-  }
-  if (dados.pais.trim() === "") {
-    return "Informe o país.";
-  }
+  if (dados.destino.trim() === "") return "Informe o destino.";
+  if (dados.pais.trim() === "") return "Informe o país.";
   return null;
-}
-
-function proximoId(lista: Viagem[]): number {
-  let maior = 0;
-  for (const viagem of lista) {
-    if (viagem.id > maior) {
-      maior = viagem.id;
-    }
-  }
-  return maior + 1;
-}
-
-// O cadastro ainda grava só na tela (a lista que veio da API). Ir para o banco é o próximo passo.
-export function cadastrarViagem(lista: Viagem[], dados: NovaViagem): Viagem {
-  const nova: Viagem = {
-    id: proximoId(lista),
-    destino: dados.destino.trim(),
-    pais: dados.pais.trim(),
-    situacao: dados.situacao,
-    tipo: dados.tipo,
-    observacao: dados.observacao,
-    atividades: dados.atividades,
-    criadaEm: new Date(),
-  };
-  lista.push(nova);
-  return nova;
 }

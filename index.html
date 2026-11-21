@@ -59,13 +59,25 @@
     <section class="painel">
       <div class="estatistica">
         <span class="estatistica__numero" id="total">0</span>
-        <span class="estatistica__rotulo">viagens</span>
+        <span class="estatistica__rotulo">total</span>
       </div>
       <div class="estatistica">
-        <span class="estatistica__numero" id="pendentes">0</span>
+        <span class="estatistica__numero" id="planejadas">0</span>
         <span class="estatistica__rotulo">planejadas</span>
       </div>
+      <div class="estatistica">
+        <span class="estatistica__numero" id="confirmadas">0</span>
+        <span class="estatistica__rotulo">confirmadas</span>
+      </div>
+      <div class="estatistica">
+        <span class="estatistica__numero" id="concluidas">0</span>
+        <span class="estatistica__rotulo">concluídas</span>
+      </div>
     </section>
+
+    <p class="aviso aviso--oculto" id="aviso-urgente">
+      Atenção: há viagens planejadas aguardando confirmação.
+    </p>
 
     <p class="aviso" id="comece-por" hidden></p>
     <p class="aviso aviso--erro" id="erro-api" hidden></p>
@@ -98,21 +110,3 @@
           </select>
         </div>
         <div class="campo campo--largo">
-          <label for="atividades">Atividades (separadas por vírgula)</label>
-          <input type="text" id="atividades" placeholder="Ex.: Coliseu, Fontana di Trevi" />
-        </div>
-        <div class="campo campo--largo">
-          <label for="observacao">Observação (opcional)</label>
-          <input type="text" id="observacao" />
-        </div>
-        <button type="submit" class="botao">Cadastrar</button>
-        <p class="mensagem" id="mensagem-form" hidden></p>
-      </form>
-    </section>
-
-    <ul class="lista" id="lista"></ul>
-  </main>
-
-  <script type="module" src="./src/main.ts"></script>
-</body>
-</html>

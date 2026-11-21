@@ -152,7 +152,32 @@ app.delete("/api/viagens/:id", exigirLogin, async (req, res) => {
   res.status(204).end();
 });
 
-// ---------- ROTAS DE USUÁRIOS ----------
+// ROTA DEESTATÍSTICAS
+
+app.get("/api/estatisticas", exigirLogin, async (_req, res) => {
+  const [linhas] = await banco.execute<RowDataPacket[]>(
+    `SELECT status, COUNT(*) AS quantidade
+     FROM viagens
+     WHERE usuario_id = ?
+     GROUP BY status`,
+    [usuarioDe(res)]
+  );
+
+  // Começa zerado porque o GROUP BY não devolve linha para status sem viagem
+  const contagem: Record<string, number> = {
+    planejada: 0,
+    em_andamento: 0,
+    concluida: 0,
+  };
+
+  for (const linha of linhas) {
+    contagem[linha.status] = Number(linha.quantidade);
+  }
+
+  res.json(contagem);
+});
+
+// ROTAS DE USUÁRIOS 
 
 app.post("/api/usuarios", async (req, res) => {
   const { nome, email, senha } = req.body as {

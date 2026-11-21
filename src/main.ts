@@ -1,6 +1,7 @@
 import { campo, elemento, selecao } from "./dom";
 import {
   alterarSituacao,
+  buscarEstatisticas,
   cadastrarViagemApi,
   criarConta,
   encerrarSessao,
@@ -10,14 +11,24 @@ import {
   removerViagem,
   sessaoAtual,
 } from "./api";
-import { separarAtividades, validarViagem } from "./servicos";
+import {
+  existePlanejada,
+  filtrarPorSituacao,
+  ordenarPorSituacao,
+  pesquisarPorDestino,
+  separarAtividades,
+  todasConcluidas,
+  validarViagem,
+} from "./servicos";
 import type { NovaViagem, Situacao, TipoViagem, Viagem } from "./tipos";
 
 elemento("nome-do-sistema").textContent = "RotaFácil";
-elemento("versao").textContent = "v0.5.0";
+elemento("versao").textContent = "v0.6.0";
 elemento("data-de-hoje").textContent = new Date().toLocaleDateString("pt-BR");
 
 let lista: Viagem[] = [];
+let situacaoSelecionada: Situacao | "todas" = "todas";
+let termoDeBusca = "";
 
 function botao(texto: string, extra: string, aoClicar: () => void): HTMLButtonElement {
   const btn = document.createElement("button");
@@ -71,12 +82,38 @@ function criarItem(viagem: Viagem): HTMLLIElement {
   return item;
 }
 
-function desenhar(): void {
-  elemento("lista").replaceChildren(...lista.map(criarItem));
+function viagensVisiveis(): Viagem[] {
+  let resultado = lista;
+  if (situacaoSelecionada !== "todas") {
+    resultado = filtrarPorSituacao(resultado, situacaoSelecionada);
+  }
+  if (termoDeBusca.trim() !== "") {
+    resultado = pesquisarPorDestino(resultado, termoDeBusca);
+  }
+  return ordenarPorSituacao(resultado);
+}
 
-  const planejadas = lista.filter((v) => v.situacao === "planejada");
-  elemento("total").textContent = String(lista.length);
-  elemento("pendentes").textContent = String(planejadas.length);
+async function atualizarPainel(): Promise<void> {
+  const contagem = await buscarEstatisticas();
+  const total = contagem.planejada + contagem.confirmada + contagem.concluida;
+  elemento("total").textContent = String(total);
+  elemento("planejadas").textContent = String(contagem.planejada);
+  elemento("confirmadas").textContent = String(contagem.confirmada);
+  elemento("concluidas").textContent = String(contagem.concluida);
+}
+
+function desenhar(): void {
+  const visiveis = viagensVisiveis();
+  elemento("lista").replaceChildren(...visiveis.map(criarItem));
+  elemento("vazio").hidden = visiveis.length > 0;
+
+  // some: existe pelo menos uma viagem planejada?
+  elemento("aviso-urgente").classList.toggle("aviso--oculto", !existePlanejada(lista));
+
+  // every: todas concluídas?
+  if (todasConcluidas(lista)) {
+    console.log("Parabéns: todas as viagens foram concluídas!");
+  }
 
   const primeira = lista.find((v) => v.situacao === "planejada");
   const aviso = elemento("comece-por");
@@ -86,7 +123,30 @@ function desenhar(): void {
   } else {
     aviso.hidden = true;
   }
+
+  atualizarPainel().catch((erro) => {
+    const avisoApi = elemento("erro-api");
+    avisoApi.textContent = erro instanceof Error ? erro.message : "Erro ao carregar painel.";
+    avisoApi.hidden = false;
+  });
 }
+
+elemento("filtros-situacao").addEventListener("click", (evento) => {
+  const alvo = evento.target;
+  if (!(alvo instanceof HTMLButtonElement)) return;
+  const escolhido = alvo.dataset.situacao;
+  if (!escolhido) return;
+  situacaoSelecionada = escolhido as Situacao | "todas";
+  for (const b of elemento("filtros-situacao").querySelectorAll("button")) {
+    b.classList.toggle("filtro--ativo", b === alvo);
+  }
+  desenhar();
+});
+
+campo("busca").addEventListener("input", () => {
+  termoDeBusca = campo("busca").value;
+  desenhar();
+});
 
 async function mudarSituacao(id: number, situacao: Situacao): Promise<void> {
   try {

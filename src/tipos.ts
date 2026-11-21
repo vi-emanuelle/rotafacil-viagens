@@ -18,3 +18,5 @@ export interface Sessao {
   token: string;
   nome: string;
 }
+
+export type Contagem = Record<Situacao, number>;
